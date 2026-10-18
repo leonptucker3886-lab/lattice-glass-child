@@ -70,6 +70,7 @@ h2{color:var(--gold);text-align:center;margin:4px 0 12px;font-size:24px;text-sha
   <div class="sub">Veyl · Year 1000 AE · Chapter I: The Glass Child</div>
   <div class="panel">
    <button class="btn gold" id="mPlay">Jack In</button>
+   <button class="btn" id="mCh2">Chapter II: The Ninth Recording</button>
    <button class="btn" id="mShop">Augment Clinic (Upgrades)</button>
    <button class="btn" id="mLore">Data Archive</button>
    <div class="sub" id="mStats" style="margin:10px 0 0"></div>
@@ -152,7 +153,19 @@ const STAGES=[
   waves:[['wisp',8,'walker',6],['nameless',3,'wisp',7],['nameless',5,'oathbound',3,'hound',6]]},
  {n:'The Core',t:'Where the dead god is being compiled.',col:['#2a0620','#0a0208'],gr:'#36102a',x:.86,y:.14,boss:1,
   card:['The Core','A sphere of white light the size of a moon hangs over a pit of burning ash. Ten thousand cables feed it. Some of the cables end in people.\n\nThis is <b>SERAPH-0</b>: the first fragment of the rebuilt god.\n\n<i>"KAEL VANE. YOUR BLOOD IS MISSING CODE. GIVE IT BACK, AND I WILL LET YOU FORGET EVERYTHING."</i>'],
-  waves:[['boss',1]]}
+  waves:[['boss',1]]},
+ {n:'Dead Air District',t:'Every speaker in the city is playing the Ninth Bell.',col:['#1a0a0a','#060203'],gr:'#2a1010',x:.16,y:.8,
+  card:['Dead Air District','At midnight the recording of the Ninth Bell plays in every street, as it has for five hundred years. Tonight it does not stop.\n\nPeople stand in the rain with their mouths open, humming the toll. Their eyes have gone white. The Synod calls them <b>Listeners</b>.\n\n<b>Mother Static:</b> "Someone is broadcasting under the bell, Kael. A voice. Old. It\'s calling you home."'],
+  waves:[['listener',8,'walker',5],['listener',10,'hound',5],['tower',2,'listener',8]]},
+ {n:'The Drone Graveyard',t:'Where the Synod dumps machines that learned to dream.',col:['#0a1a14','#020806'],gr:'#0e2a20',x:.4,y:.56,
+  card:['The Drone Graveyard','Mountains of dead drones. Somewhere in the pile, one is still singing.\n\nYou dig it out: a cracked surveillance drone with a child\'s voice module. <b>WREN-9</b>.\n\n<b>WREN-9:</b> "They wiped me eleven times. I kept the bell each time. I can shoot. Please don\'t leave me here."\n\n<b>WREN-9 joins you.</b> She orbits you and fires on the nearest enemy.\n\n<i>Her serial number is your sister\'s birth date.</i>'],
+  waves:[['listener',8,'tower',2],['hunter',3,'listener',8],['hunter',4,'tower',3,'hound',6]]},
+ {n:'Synod Archive',t:'A thousand years of erased names, stored in salt-glass.',col:['#141022','#05040a'],gr:'#201a36',x:.64,y:.36,
+  card:['Synod Archive','The Archive is a canyon of salt-glass cylinders. In each one floats a name the Synod deleted.\n\nA Warden waits for you with her helmet off. <b>Juno Ashgrave</b>, the woman who took your sister\'s eyes.\n\n<b>Juno:</b> "I did it. I\'ll carry that. The Recording is going to wipe every mind in nine cities by dawn, and I can\'t stop it alone."\n\n<b>Juno joins you.</b> She fights up close with a shock-baton.\n\n<i>Beyond her, the Archivist is waking up.</i>'],
+  waves:[['hunter',5,'listener',8],['archivist',1,'tower',3],['hunter',5,'tower',3,'listener',10]]},
+ {n:'The Broadcast Bell',t:'The transmitter where the Ninth Recording is played.',col:['#2a0a06','#0a0302'],gr:'#3a1408',x:.86,y:.14,boss:1,bn:'THE NINTH RECORDING',
+  card:['The Broadcast Bell','At the top of the transmitter hangs a bell made of five hundred years of speakers, welded together into one throat.\n\nInside it, something has learned to sing. It is made of every recording of the Ninth Bell ever played, and every scream recorded under it.\n\n<b>THE NINTH RECORDING:</b> <i>"I REMEMBER CORROW. I REMEMBER THE WITCH WHO RANG ME. YOU HAVE HER EYES, KAEL VANE."</i>'],
+  waves:[['bell',1]]}
 ];
 const END=['GRANDMOTHER','SERAPH-0 cracks like a dropped lens. Light pours out of the wound, and for one second the Core goes silent.\n\nThen it speaks again. Not in the machine voice. In an old woman\'s voice, rough as steppe wind:\n\n<i>"Little ember. A thousand years I have slept in their bells and their wires. They built a god out of me and forgot to ask.</i>\n\n<i>Your blood is mine, child. So are you. Carry me out of here."</i>\n\n<b>Mother Static:</b> "Kael... that\'s Grandmother Cinder. That\'s the first witch."\n\nBelow you, nine cities begin to flicker.'];
 const LORE='<b>The Glass Child</b> (Undercity rhyme)\nOne day a mind of light will speak for the god, and everyone who listens will forget their name.\n\n<b>The Ninth Bell</b> (Corrow, 512 AE)\nEight bells for the living, the ninth for the dead. The Synod still rings a recording of the Ninth Bell every midnight, "in memory." Nobody remembers of what.\n\n<b>Grandmother Cinder</b> (steppe, Year 0)\nThe first witch swallowed a coal from the god\'s heart so the dead would lie down. The Synod teaches she never existed.\n\n<b>Greyeyes</b>\nPeople who sniff raw lumen see the old god in their sleep. Wardens burn their eyes out "for public health."';
@@ -166,6 +179,11 @@ const EN={
  oathbound:{hp:120,spd:42,dmg:17,r:20,col:'#5a3aa0',ash:6,armor:.35},
  wisp:{hp:26,spd:60,dmg:8,r:12,col:'#ff3df0',ash:3,ranged:1},
  nameless:{hp:72,spd:72,dmg:15,r:17,col:'#7a1a5a',ash:6,blink:1},
+ listener:{hp:34,spd:70,dmg:9,r:14,col:'#d8d8e8',ash:3},
+ tower:{hp:140,spd:30,dmg:14,r:22,col:'#ff5a3a',ash:8,ranged:1,armor:.3},
+ hunter:{hp:80,spd:95,dmg:16,r:16,col:'#ffd84a',ash:6,blink:1},
+ archivist:{hp:900,spd:45,dmg:24,r:32,col:'#b0a0ff',ash:45,armor:.3,ranged:1},
+ bell:{hp:4000,spd:38,dmg:28,r:52,col:'#ff8a3a',ash:200,boss:1},
  boss:{hp:2800,spd:40,dmg:24,r:50,col:'#e8f4ff',ash:130,boss:1}
 };
 const AW=1100,AH=1100;
@@ -303,8 +321,8 @@ function spawn(type,n){
 function startWave(){
  const w=STAGES[G.stage].waves[G.wave];
  for(let i=0;i<w.length;i+=2)spawn(w[i],w[i+1]);
- $('info').textContent=STAGES[G.stage].n+' — '+(STAGES[G.stage].boss?'SERAPH-0':'Wave '+(G.wave+1)+'/'+STAGES[G.stage].waves.length);
- if(STAGES[G.stage].boss){SFX.boss();shake=20;toast('SERAPH-0 ONLINE');}else toast('Wave '+(G.wave+1));
+ $('info').textContent=STAGES[G.stage].n+' — '+(STAGES[G.stage].boss?(STAGES[G.stage].bn||'SERAPH-0'):'Wave '+(G.wave+1)+'/'+STAGES[G.stage].waves.length);
+ if(STAGES[G.stage].boss){SFX.boss();shake=20;toast((STAGES[G.stage].bn||'SERAPH-0')+' ONLINE');}else toast('Wave '+(G.wave+1));
 }
 function enterStage(){
  ENS.length=0;PR.length=0;ASHP.length=0;FX.length=0;G.x=AW/2;G.y=AH*.7;G.wave=0;G.boss=null;G.spirit=null;
@@ -334,7 +352,7 @@ function bossAI(e,dt){
 }
 
 /* ---------- UPDATE ---------- */
-function update(dt){
+function update(dt){compUpd(dt);
  G.t+=dt;const h=hero();
  if(G.between>0){G.between-=dt;if(G.between<=0)startWave();}
  // move
@@ -394,7 +412,8 @@ function stageClear(){
  state='between';SFX.win();buzz([30,30,30]);
  const bonus=Math.round(40*(G.stage+1)*(1+G.ng*.5));G.score+=bonus;
  G.stage++;
- if(G.stage>=STAGES.length){victory();return;}
+ if(G.stage>=STAGES.length){victory2();return;}
+ if(G.stage===4){state='over';setTimeout(()=>cards([END,CH2CARD],showMap),1100);return;}
  toast('Stage cleared  +'+bonus);setTimeout(showMap,1100);
 }
 function showMap(){show('map');state='map';const s=STAGES[G.stage];$('mapT').innerHTML='<b style="color:var(--gold)">'+s.n+'</b><br>'+s.t;requestAnimationFrame(drawMap);}
@@ -403,18 +422,31 @@ function drawMap(){const c=$('mapc'),r=c.getBoundingClientRect(),d=Math.min(devi
  const g=m.createRadialGradient(w*.85,h*.15,10,w/2,h/2,w);g.addColorStop(0,'#5a1a0a');g.addColorStop(1,'#120806');m.fillStyle=g;m.fillRect(0,0,w,h);
  m.strokeStyle='#2a6a8a';m.lineWidth=6;m.beginPath();m.moveTo(0,h*.45);m.bezierCurveTo(w*.3,h*.6,w*.5,h*.4,w,h*.62);m.stroke();m.fillStyle='#4aa8c8';m.font='italic 12px Trebuchet MS';m.fillText('Lumen Conduit',w*.62,h*.6);
  for(let i=0;i<40;i++){m.fillStyle='rgba(200,180,160,'+(Math.random()*.15)+')';m.fillRect(Math.random()*w,Math.random()*h,2,2);}
- m.setLineDash([5,6]);m.strokeStyle='#ff3df088';m.lineWidth=2;m.beginPath();STAGES.forEach((s,i)=>i?m.lineTo(s.x*w,s.y*h):m.moveTo(s.x*w,s.y*h));m.stroke();m.setLineDash([]);
- STAGES.forEach((s,i)=>{const x=s.x*w,y=s.y*h,cur=i===G.stage,done=i<G.stage;m.beginPath();m.arc(x,y,cur?13:9,0,7);m.fillStyle=done?'#6a5a4a':cur?'#22e6ff':'#3a2420';m.shadowColor='#22e6ff';m.shadowBlur=cur?20:0;m.fill();m.shadowBlur=0;m.strokeStyle='#ff3df0';m.stroke();
+ m.setLineDash([5,6]);m.strokeStyle='#ff3df088';m.lineWidth=2;m.beginPath();STAGES.forEach((s,i)=>((i>=4)!==(G.stage>=4))?0:(i%4)?m.lineTo(s.x*w,s.y*h):m.moveTo(s.x*w,s.y*h));m.stroke();m.setLineDash([]);
+ STAGES.forEach((s,i)=>{if((i>=4)!==(G.stage>=4))return;const x=s.x*w,y=s.y*h,cur=i===G.stage,done=i<G.stage;m.beginPath();m.arc(x,y,cur?13:9,0,7);m.fillStyle=done?'#6a5a4a':cur?'#22e6ff':'#3a2420';m.shadowColor='#22e6ff';m.shadowBlur=cur?20:0;m.fill();m.shadowBlur=0;m.strokeStyle='#ff3df0';m.stroke();
   m.fillStyle=cur?'#fff36a':'#c8b8a8';m.font=(cur?'bold ':'')+'13px Trebuchet MS';m.textAlign=s.x>.7?'right':'left';m.fillText((done?'✓ ':'')+s.n,x+(s.x>.7?-16:16),y+4);});m.textAlign='left';}
 function finishRun(win){const ashGain=G.ashRun;S.ash+=ashGain;const sc=G.score+G.kills*5;if(sc>S.best)S.best=sc;if(win){S.wins++;S.ng++;}save();return {ashGain,sc};}
 function gameOver(){if(state==='over')return;state='over';shake=20;SFX.die();buzz([100,50,200]);
  setTimeout(()=>{const r=finishRun(false);$('oT').textContent='FLATLINED';
-  $('oX').innerHTML='Your heart stops. The Synod scrapes your blood into a vial before you are cold.\n\n<i>Somewhere above, SERAPH learns a little more of its own name.</i>\n\nReached: <b>'+STAGES[Math.min(G.stage,3)].n+'</b>\nKills: <b>'+G.kills+'</b>\nScore: <b>'+r.sc+'</b>  ·  Best: <b>'+S.best+'</b>\nShards ripped: <span class="ash">+'+r.ashGain+'</span>\n\nSpend Shards at the Augment Clinic. Mother Static can re-sleeve you. She always can.';show('over');},900);}
+  $('oX').innerHTML='Your heart stops. The Synod scrapes your blood into a vial before you are cold.\n\n<i>Somewhere above, SERAPH learns a little more of its own name.</i>\n\nReached: <b>'+STAGES[Math.min(G.stage,STAGES.length-1)].n+'</b>\nKills: <b>'+G.kills+'</b>\nScore: <b>'+r.sc+'</b>  ·  Best: <b>'+S.best+'</b>\nShards ripped: <span class="ash">+'+r.ashGain+'</span>\n\nSpend Shards at the Augment Clinic. Mother Static can re-sleeve you. She always can.';show('over');},900);}
 function victory(){state='over';const r=finishRun(true);
  setTimeout(()=>cards([END,['Chapter I Complete','<b>Score: '+r.sc+'</b>  ·  Best: '+S.best+'\nKills: '+G.kills+'\nShards: <span class="ash">+'+r.ashGain+'</span>\n\n<b>Threat rises.</b> Threat Level '+S.ng+' unlocked: enemies hit harder and drop more Shards.\n\n<i>At midnight, every speaker in nine cities plays the recording of the Ninth Bell.\n\nThis time, someone is ringing it.</i>\n\nChapter II: <b>The Ninth Recording</b> — coming soon.']],()=>{refreshMenu();show('menu');state='menu';}),1400);}
+const CH2CARD=['Chapter II \u00b7 The Ninth Recording','SERAPH-0 is dead, but the old woman\'s voice did not leave the Core. It followed you out, through every speaker you walk past.\n\nAt midnight, nine cities hear the recording of the Ninth Bell. This time it does not stop.\n\n<b>Mother Static:</b> "Kael, the toll is rewriting people. Find the transmitter before dawn or there won\'t be anyone left who remembers their own name."'];
+function compUpd(dt){if(!G||state!=='play')return;G.comp=G.comp||[];const want=[];if(G.stage>=5)want.push('wren');if(G.stage>=6)want.push('juno');
+ want.forEach(k=>{if(!G.comp.some(c=>c.k===k)){G.comp.push({k,x:G.x,y:G.y,cd:0,a:0});toast(k==='wren'?'WREN-9 joins':'Juno joins')}});
+ for(const c of G.comp){c.cd-=dt;c.a+=dt*2.4;
+  if(c.k==='wren'){c.x=G.x+Math.cos(c.a)*46;c.y=G.y+Math.sin(c.a)*46;const t=nearest(c.x,c.y,460);if(t&&c.cd<=0){c.cd=.45;const l=Math.hypot(t.x-c.x,t.y-c.y)||1;PR.push({x:c.x,y:c.y,vx:(t.x-c.x)/l*600,vy:(t.y-c.y)/l*600,d:7,r:4,l:.8,c:'#9effc0',own:1,tr:1});}}
+  else{const t=nearest(c.x,c.y,380);let tx=G.x+30,ty=G.y+30;if(t){tx=t.x;ty=t.y}const dx=tx-c.x,dy=ty-c.y,d=Math.hypot(dx,dy)||1;if(d>(t?t.r+14:50)){c.x+=dx/d*200*dt;c.y+=dy/d*200*dt}
+   else if(t&&c.cd<=0){c.cd=.55;hitEnemy(t,22,40,c.x,c.y);part(t.x,t.y,10,'#ffd84a',160,.3)}}}}
+function compDraw(){if(!G||!G.comp)return;for(const c of G.comp){if(c.k==='wren'){glowCircle(c.x,c.y,6,'#9effc0',18)}else{glowCircle(c.x,c.y,13,'#ffb84a',16);cx.fillStyle='#1a1410';cx.beginPath();cx.arc(c.x,c.y,8,0,7);cx.fill()}}}
+function victory2(){state='over';const r=finishRun(true);
+ setTimeout(()=>cards([['SILENCE','The Broadcast Bell tears itself apart, one speaker at a time. For the first time in five hundred years, midnight in the nine cities is silent.\n\nIn the streets the Listeners fall to their knees and start to cry. Some remember their names. Many do not.\n\nJuno sits on the edge of the transmitter, helmet in her lap. WREN-9 lands on Kael\'s shoulder and hums the toll very quietly, like a lullaby.\n\nThen, from the dead speakers, one last time, the old woman: <i>"You silenced the recording, child. Now come and find the real bell. It is still ringing, under Corrow."</i>'],['Chapter II Complete','<b>Score: '+r.sc+'</b>  \u00b7  Best: '+S.best+'\nKills: '+G.kills+'\nShards: <span class="ash">+'+r.ashGain+'</span>\n\nChapter III: <b>Under Corrow</b> is coming.']],()=>{refreshMenu();show('menu');state='menu';}),1400);}
+function startCh2(){newRun();G.stage=4;G.heroes.forEach(q=>{q.max=Math.round(q.max*1.3);q.hp=q.max});cards([CH2CARD],showMap);}
+
 function refreshMenu(){$('mStats').innerHTML='Best: '+S.best+' · Shards: <span class="ash">'+S.ash+'</span>'+(S.ng?' · Threat Level '+S.ng:'');}
 function startRun(){newRun();cards(S.wins?[INTRO[2]]:INTRO,showMap);}
 $('mPlay').onclick=()=>{audio();SFX.ui();startRun();};
+$('mCh2').onclick=()=>{audio();SFX.ui();startCh2();};
 $('mShop').onclick=()=>{audio();SFX.ui();openShop('menu');};
 $('mLore').onclick=()=>{audio();SFX.ui();cards([['Data Archive',LORE]],()=>{show('menu');state='menu';});};
 let shopBack='menu';
@@ -438,7 +470,7 @@ function hud(){const h=hero();$('top').innerHTML='<div class="hc act">\u25c8 KAE
 
 /* ---------- RENDER ---------- */
 function glowCircle(x,y,r,c,b){cx.shadowColor=c;cx.shadowBlur=b||0;cx.fillStyle=c;cx.beginPath();cx.arc(x,y,r,0,7);cx.fill();cx.shadowBlur=0;}
-function drawHero(t){const h=hero(),c=h.d.col,x=G.x,y=G.y,bob=Math.sin(t*8)*1.5;
+function drawHero(t){compDraw();const h=hero(),c=h.d.col,x=G.x,y=G.y,bob=Math.sin(t*8)*1.5;
  cx.fillStyle='rgba(0,0,0,.4)';cx.beginPath();cx.ellipse(x,y+16,14,5,0,0,7);cx.fill();
  if(G.block>0){cx.strokeStyle='rgba(158,224,255,'+(.5+.3*Math.sin(t*20))+')';cx.lineWidth=4;cx.beginPath();cx.arc(x,y,26,0,7);cx.stroke();}
  if(G.inv>0&&Math.floor(t*20)%2)cx.globalAlpha=.5;
@@ -466,7 +498,7 @@ function drawEnemy(e,t){const x=e.x,y=e.y,r=e.r,w=Math.sin(e.ph*6)*2;
 
 function render(){
  cx.setTransform(DPR,0,0,DPR,0,0);
- const s=G?STAGES[Math.min(G.stage,3)]:STAGES[3],t=performance.now()/1000;
+ const s=G?STAGES[Math.min(G.stage,STAGES.length-1)]:STAGES[3],t=performance.now()/1000;
  const bg=cx.createLinearGradient(0,0,0,H);bg.addColorStop(0,s.col[0]);bg.addColorStop(1,s.col[1]);cx.fillStyle=bg;cx.fillRect(0,0,W,H);
  const inGame=G&&(state==='play'||state==='between'||state==='over'||state==='paused');
  if(inGame){
